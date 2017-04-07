@@ -3,6 +3,16 @@ VAR
   Numerator, Denominator: INTEGER;
   IntegerPart: INTEGER;
 
+{Выводит смешанную дробь на экран}
+PROCEDURE PrintFraction(IntegerPart, Numerator, Denominator: INTEGER);
+BEGIN
+  IF IntegerPart = 0
+  THEN
+    WRITELN(Numerator, '/', Denominator)
+  ELSE
+    WRITELN(IntegerPart, ' ', Numerator, '/', Denominator)
+END;
+
 BEGIN
   READLN(Numerator);
   READLN(Denominator);
@@ -10,9 +20,5 @@ BEGIN
   IntegerPart := Numerator DIV Denominator;
   Numerator := Numerator MOD Denominator;
 
-  IF IntegerPart = 0
-  THEN
-    WRITELN(Numerator, '/', Denominator)
-  ELSE
-    WRITELN(IntegerPart, ' ', Numerator, '/', Denominator)
+  PrintFraction(IntegerPart, Numerator, Denominator)
 END.
