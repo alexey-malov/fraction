@@ -34,7 +34,7 @@ BEGIN
   GreatestCommonDenominator := A
 END;
 
-{”прощает правильную дробь (дробь, где числитель меньше знаменател€)}
+{”прощает дробь}
 PROCEDURE SimplifyFraction(VAR Numerator, Denominator: INTEGER);
 VAR
   GCD: INTEGER;
