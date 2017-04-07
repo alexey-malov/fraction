@@ -1,4 +1,7 @@
 PROGRAM Fraction(INPUT, OUTPUT);
+CONST
+  UpperBound = 1000000;
+
 VAR
   Numerator, Denominator, IntegerPart: INTEGER;
 
@@ -17,7 +20,7 @@ BEGIN
 END;
 
 {¬озвращает наибольший общий делитель чисел A и B}
-FUNCTION GreatestCommonDenominator(A, B: INTEGER):INTEGER;
+FUNCTION GreatestCommonDenominator(A, B: INTEGER): INTEGER;
 VAR
   Temp: INTEGER;
 BEGIN
@@ -41,13 +44,42 @@ BEGIN
   Denominator := Denominator DIV GCD;
 END;
 
+FUNCTION ReadInteger(VAR X: INTEGER): BOOLEAN;
+VAR
+  InputString: STRING[255];
+  ErrorCode: INTEGER;
 BEGIN
-  READLN(Numerator);
-  READLN(Denominator);
+  READLN(InputString);
+  VAL(InputString, X, ErrorCode);
+  ReadInteger := ErrorCode = 0
+END;
 
-  IntegerPart := Numerator DIV Denominator;
-  Numerator := Numerator MOD Denominator;
-  SimplifyFraction(Numerator, Denominator);
+FUNCTION IsInRange(X, MinValue, MaxValue: INTEGER): BOOLEAN;
+BEGIN
+  IsInRange := (X >= MinValue) AND (X <= MaxValue);
+END;
 
-  PrintFraction(IntegerPart, Numerator, Denominator)
+FUNCTION ReadFraction(VAR Numerator, Denominator: INTEGER): BOOLEAN;
+BEGIN
+  ReadFraction := FALSE;
+  IF ReadInteger(Numerator) AND ReadInteger(Denominator)
+  THEN
+    IF IsInRange(Numerator, 0, UpperBound) AND 
+       IsInRange(Denominator, 1, UpperBound)
+    THEN
+      ReadFraction := TRUE
+END; 
+
+BEGIN
+  IF ReadFraction(Numerator, Denominator)
+  THEN
+    BEGIN
+      IntegerPart := Numerator DIV Denominator;
+      Numerator := Numerator MOD Denominator;
+      SimplifyFraction(Numerator, Denominator);
+
+      PrintFraction(IntegerPart, Numerator, Denominator)
+    END
+  ELSE
+    WRITELN('ERROR')
 END.
