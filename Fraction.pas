@@ -12,26 +12,29 @@ BEGIN
     WRITELN(IntegerPart, ' ', Numerator, '/', Denominator)
 END;
 
+{Возвращает наибольший общий делитель чисел A и B}
+FUNCTION GreatestCommonDenominator(A, B: INTEGER):INTEGER;
+VAR
+  Temp: INTEGER;
+BEGIN
+  WHILE B <> 0
+  DO
+    BEGIN
+      Temp := B;
+      B := A MOD B;
+      A := Temp
+    END;
+  GreatestCommonDenominator := A
+END;
+
 {Упрощает правильную дробь (дробь, где числитель меньше знаменателя)}
 PROCEDURE SimplifyFraction(VAR Numerator, Denominator: INTEGER);
 VAR
-  {Greatest Common Denominator - наибольший общий делитель}
   GCD: INTEGER;
 BEGIN
-  GCD := Numerator;
-  WHILE GCD > 1
-  DO
-    BEGIN
-      IF (Numerator MOD GCD = 0) AND (Denominator MOD GCD = 0)
-      THEN
-        BEGIN
-          Numerator := Numerator DIV GCD;
-          Denominator := Denominator DIV GCD;
-          GCD := Numerator
-        END
-      ELSE
-        GCD := GCD - 1
-    END
+  GCD := GreatestCommonDenominator(Numerator, Denominator);
+  Numerator := Numerator DIV GCD;
+  Denominator := Denominator DIV GCD;
 END;
 
 BEGIN
