@@ -5,11 +5,15 @@ VAR
 {Выводит смешанную дробь на экран}
 PROCEDURE PrintFraction(IntegerPart, Numerator, Denominator: INTEGER);
 BEGIN
-  IF IntegerPart = 0
+  IF Numerator = 0
   THEN
-    WRITELN(Numerator, '/', Denominator)
+    WRITELN(IntegerPart)
   ELSE
-    WRITELN(IntegerPart, ' ', Numerator, '/', Denominator)
+    IF IntegerPart = 0 {Числитель не равен 0}
+    THEN
+      WRITELN(Numerator, '/', Denominator)
+    ELSE
+      WRITELN(IntegerPart, ' ', Numerator, '/', Denominator)
 END;
 
 {Возвращает наибольший общий делитель чисел A и B}
