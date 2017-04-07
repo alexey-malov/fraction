@@ -12,11 +12,12 @@ BEGIN
   THEN
     WRITELN(IntegerPart)
   ELSE
-    IF IntegerPart = 0 {Числитель не равен 0}
-    THEN
+    BEGIN
+      IF IntegerPart <> 0
+      THEN
+        WRITE(IntegerPart, ' ');
       WRITELN(Numerator, '/', Denominator)
-    ELSE
-      WRITELN(IntegerPart, ' ', Numerator, '/', Denominator)
+    END
 END;
 
 {Возвращает наибольший общий делитель чисел A и B}
