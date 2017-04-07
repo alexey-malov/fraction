@@ -1,0 +1,12 @@
+[Project]
+FileName=F:\teaching\ispring-challenge\fraction\Fraction.dp
+Name=Fraction
+MainUnit=F:\teaching\ispring-challenge\fraction\Fraction.pas
+UnitCount=1
+ResFiles=
+NoConsole=0
+IsDll=0
+Icon=C:\dev_gpc\Icon\Mainicon.ico
+[Unit1]
+FileName=F:\teaching\ispring-challenge\fraction\Fraction.pas
+FileTime=1250398565
