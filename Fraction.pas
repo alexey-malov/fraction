@@ -2,21 +2,24 @@ PROGRAM Fraction(INPUT, OUTPUT);
 CONST
   UpperBound = 1000000;
 
-VAR
-  Numerator, Denominator, IntegerPart: INTEGER;
+TYPE
+  {Тип данных Смешанная дробь}
+  CompoundFraction = RECORD
+    IntegerPart, Numerator, Denominator: INTEGER;
+  END;
 
 {Выводит смешанную дробь на экран}
-PROCEDURE PrintFraction(IntegerPart, Numerator, Denominator: INTEGER);
+PROCEDURE PrintFraction(Fract: CompoundFraction);
 BEGIN
-  IF Numerator = 0
+  IF Fract.Numerator = 0
   THEN
-    WRITELN(IntegerPart)
+    WRITELN(Fract.IntegerPart)
   ELSE
     BEGIN
-      IF IntegerPart <> 0
+      IF Fract.IntegerPart <> 0
       THEN
-        WRITE(IntegerPart, ' ');
-      WRITELN(Numerator, '/', Denominator)
+        WRITE(Fract.IntegerPart, ' ');
+      WRITELN(Fract.Numerator, '/', Fract.Denominator)
     END
 END;
 
@@ -33,16 +36,6 @@ BEGIN
       A := Temp
     END;
   GreatestCommonDenominator := A
-END;
-
-{Упрощает дробь}
-PROCEDURE SimplifyFraction(VAR Numerator, Denominator: INTEGER);
-VAR
-  GCD: INTEGER;
-BEGIN
-  GCD := GreatestCommonDenominator(Numerator, Denominator);
-  Numerator := Numerator DIV GCD;
-  Denominator := Denominator DIV GCD;
 END;
 
 FUNCTION ReadInteger(VAR X: INTEGER): BOOLEAN;
@@ -69,18 +62,29 @@ BEGIN
        IsInRange(Denominator, 1, UpperBound)
     THEN
       ReadFraction := TRUE
-END; 
+END;
 
+{Преобразует простую дробь в смешанную}
+FUNCTION ToCompoundFraction(Numerator, Denominator: INTEGER): CompoundFraction;
+VAR
+  GCD: INTEGER;
+  Fract: CompoundFraction;
+BEGIN
+  GCD := GreatestCommonDenominator(Numerator, Denominator);
+
+  Fract.IntegerPart := Numerator DIV Denominator;
+  Fract.Numerator := (Numerator MOD Denominator) DIV GCD;
+  Fract.Denominator := Denominator DIV GCD;
+
+  ToCompoundFraction := Fract
+END;
+
+VAR
+  Numerator, Denominator: INTEGER;
 BEGIN
   IF ReadFraction(Numerator, Denominator)
   THEN
-    BEGIN
-      IntegerPart := Numerator DIV Denominator;
-      Numerator := Numerator MOD Denominator;
-      SimplifyFraction(Numerator, Denominator);
-
-      PrintFraction(IntegerPart, Numerator, Denominator)
-    END
+    PrintFraction(ToCompoundFraction(Numerator, Denominator))
   ELSE
     WRITELN('ERROR')
 END.
