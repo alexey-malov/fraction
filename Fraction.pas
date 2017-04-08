@@ -43,9 +43,15 @@ VAR
   InputString: STRING[255];
   ErrorCode: INTEGER;
 BEGIN
-  READLN(InputString);
-  VAL(InputString, X, ErrorCode);
-  ReadInteger := ErrorCode = 0
+  IF NOT EOF
+  THEN
+    BEGIN
+      READLN(InputString);
+      VAL(InputString, X, ErrorCode);
+      ReadInteger := ErrorCode = 0
+    END  
+  ELSE
+    ReadInteger := FALSE
 END;
 
 FUNCTION IsInRange(X, MinValue, MaxValue: INTEGER): BOOLEAN;
